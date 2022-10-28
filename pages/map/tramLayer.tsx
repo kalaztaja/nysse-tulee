@@ -197,23 +197,23 @@ export const TramLayer = () => {
   }
   function getPolgyon(lat: number, long: number) {
     const firstPolygonCenter: LatLngExpression[] = getSquare(
-      lat,
+      lat + 0.0004,
       long,
-      0.002,
-      0.001
+      0.0002,
+      0.0002
     );
     const secondPolygonCenter: LatLngExpression[] = getSquare(
       lat,
       long,
-      0.001,
-      0.0
+      0.0002,
+      0.0002
     );
 
     const thirdPolygonCenter: LatLngExpression[] = getSquare(
-      lat,
+      lat - 0.0004,
       long,
-      0.0,
-      -0.001
+      -0.0002,
+      -0.0002
     );
     return [firstPolygonCenter, secondPolygonCenter, thirdPolygonCenter];
   }
@@ -224,13 +224,13 @@ export const TramLayer = () => {
     bottom: number
   ): LatLngExpression[] {
     return [
-      [lat + top, long + top],
-      [lat + bottom, long + top],
-      [lat + bottom, long + bottom],
-      [lat + top, long + bottom],
+      [lat + top, long - 0.0002],
+      [lat + -bottom, long - 0.0002],
+      [lat + -bottom, long + 0.0002],
+      [lat + top, long + 0.0002],
     ];
   }
-  function getCircles() {
+  function getTrams() {
     const newArray: Array<any> = tramCoordinates.map((el) => {
       const color = getColor(el.speed ?? 0);
       const coords = getPolgyon(el.latitude, el.longitude);
@@ -244,5 +244,5 @@ export const TramLayer = () => {
     });
     return newArray;
   }
-  return <>{getCircles()}</>;
+  return <>{getTrams()}</>;
 };
